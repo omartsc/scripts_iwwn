@@ -1,0 +1,102 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : 2.3.1-bcfaaa7b8660
+Exec   : sample -time 40:41
+Date   : Dec 06 2018
+Time   : 11:22:45
+Host   : "wabauclu"
+PID    : 20128
+Case   : /home/ubclu/OpenFOAM/ubclu-2.3.1/run/10_steffstep/04_inter_5_becken_gerade_OW45_UW55_OF5.0
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning : 
+    From function IOobject::readHeader(Istream&)
+    in file db/IOobject/IOobjectReadHeader.C at line 89
+    Reading "/home/ubclu/OpenFOAM/ubclu-2.3.1/run/10_steffstep/04_inter_5_becken_gerade_OW45_UW55_OF5.0/40/uniform/time" at line 1
+    First token could not be read or is not the keyword 'FoamFile'
+
+Check header is of the form:
+
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "40/uniform";
+    object      time;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+Create mesh for time = 40
+
+Reading set description:
+    verticalLine
+    probes
+
+--> FOAM Warning : 
+    From function IOobject::readHeader(Istream&)
+    in file db/IOobject/IOobjectReadHeader.C at line 89
+    Reading "/home/ubclu/OpenFOAM/ubclu-2.3.1/run/10_steffstep/04_inter_5_becken_gerade_OW45_UW55_OF5.0/40/uniform/time" at line 1
+    First token could not be read or is not the keyword 'FoamFile'
+
+Check header is of the form:
+
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "40/uniform";
+    object      time;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+Time = 40
+
+Time = 40.1
+
+Time = 40.2
+
+Time = 40.3
+
+Time = 40.4
+
+Time = 40.5
+
+Time = 40.6
+
+Time = 40.7
+
+Time = 40.8
+
+Time = 40.9
+
+Time = 41
+
+End
+

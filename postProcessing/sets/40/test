@@ -1,0 +1,2 @@
+#!/bin/bash
+grep -o "[^V	]\+$" probes_alpha.water_magU.xy
