@@ -50,12 +50,6 @@ paste time_temp velocity_temp > postProcessing/velocityProbes/table_velocity
 
 ###Mittelwert pro spalte
 
-
-# Zeit mit WSP verknüpfen
-#paste postProcessing/velocityProbes/time_temp postProcessing/velocityProbes/velocity_temp | awk '{print $1, $2}' >> postProcessing/velocityProbes/table_velocity
-#rm postProcessing/velocityProbes/velocity_temp
-#rm postProcessing/velocityProbes/time_temp
-
 ## Erstellen eines Diagramms mit GnuPlot
 
 # format the points as string x,y,z (delete spaces for gnuplot to read each point as string)
