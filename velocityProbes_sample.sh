@@ -56,6 +56,7 @@ paste time_temp velocity_temp > postProcessing/velocityProbes/table_velocity
 cat points_temp | tr -d [:blank:] > points_coord
 echo "ploting diagram"
 gnuplot <<- EOF
+
     set terminal pngcairo size 1600,600 enhanced font 'Verdana,10'
     set title 'Velocity probe on selected points'
 	set xlabel 'time [s]'
@@ -64,7 +65,22 @@ gnuplot <<- EOF
 	set output 'postProcessing/velocityProbes/velocity_diagram.png'
 	points = system('cat points_coord')
 	item(n) = word(points,n)
+
+	# get the mean for each point and print it to a file StatDat.dat
+	set print "StatDat.dat"
+	do for [i=2:words(points)+1] {
+	  stats  'postProcessing/velocityProbes/table_velocity' u i nooutput ;
+	  print STATS_mean
+	}
+	set print
+
 	set key outside
-	plot for [col=2:words(points)+1] 'postProcessing/velocityProbes/table_velocity' using 1:col with linespoints title item(col-1)
+	plot for [col=2:words(points)+1] 'postProcessing/velocityProbes/table_velocity' using 1:col with linespoints title item(col-1), \
+		'StatDat.dat' with lines title 'mean'
+
+	#to fix: get mean values to plot as a line
+	#	-delete StatDat.data file
+	#plot for [col=2:words(points)+1] 'postProcessing/velocityProbes/table_velocity' using 1:col with linespoints title item(col-1), \
+	#	for [col=1:words(points)] 'StatDat.dat' using 1:col with lines title col
 EOF
 rm points_coord points_temp velocity_temp time_temp
