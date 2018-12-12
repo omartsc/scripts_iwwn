@@ -24,7 +24,7 @@ read -p "-> enter name of patch: " patchName
 
 echo "processing integrated data"
 grep -F 'Time = ' postProcessing/fluxVsTime/phiWater_"${patchName}" | grep -o '[^=^ ]\+$' > postProcessing/fluxVsTime/time
-grep -F 'Integral of alphaPhi10' postProcessing/fluxVsTime/phiWater_"$patchName" | grep -o '[^=^ ^-]\+$' > postProcessing/fluxVsTime/flux
+grep -F 'Integral of alphaPhi10' postProcessing/fluxVsTime/phiWater_"$patchName" | grep -o '[^=^ ]\+$' | awk '{ print ($1 < 0) ? ($1 * -1) : $1 }' > postProcessing/fluxVsTime/flux
 echo "writing data to file -> table_phiWater_${patchName}"
 paste postProcessing/fluxVsTime/time postProcessing/fluxVsTime/flux > postProcessing/fluxVsTime/table_phiWater_"$patchName"
 rm postProcessing/fluxVsTime/time postProcessing/fluxVsTime/flux

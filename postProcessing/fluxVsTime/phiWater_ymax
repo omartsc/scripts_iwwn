@@ -20,7 +20,7 @@ allowSystemOperations : Allowing user-supplied system call operations
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 Create time
 
---> FOAM Warning : 
+--> FOAM Warning :
     From function IOobject::readHeader(Istream&)
     in file db/IOobject/IOobjectReadHeader.C at line 89
     Reading "/home/ubclu/OpenFOAM/ubclu-2.3.1/run/10_steffstep/04_inter_5_becken_gerade_OW45_UW55_OF5.0/40/uniform/time" at line 1
@@ -47,7 +47,7 @@ FoamFile
 
 Create mesh for time = 40
 
---> FOAM Warning : 
+--> FOAM Warning :
     From function IOobject::readHeader(Istream&)
     in file db/IOobject/IOobjectReadHeader.C at line 89
     Reading "/home/ubclu/OpenFOAM/ubclu-2.3.1/run/10_steffstep/04_inter_5_becken_gerade_OW45_UW55_OF5.0/40/uniform/time" at line 1
@@ -679,4 +679,3 @@ Time = 50
     Integral of alphaPhi10 over patch ymax[3] = -0.086353134
 
 End
-
