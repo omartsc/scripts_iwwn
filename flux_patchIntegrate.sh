@@ -31,7 +31,7 @@ rm postProcessing/fluxVsTime/time postProcessing/fluxVsTime/flux
 
 echo "ploting diagram"
 # list all patches that already have a flux vs time file
-ls postProcessing/fluxVsTime | grep -F "table_" | grep -o "[^_]\+$" > existingPatches
+ls postProcessing/fluxVsTime | grep -F "table_phiWater_" | sed 's/table_phiWater_//g' > existingPatches
 gnuplot <<- EOF
     set terminal pngcairo size 800,600 enhanced font 'Verdana,10'
     set title 'flux of phase fraction 1 (phi water) over time at patch'
