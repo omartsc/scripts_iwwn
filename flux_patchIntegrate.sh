@@ -41,6 +41,7 @@ gnuplot <<- EOF
     outfile = 'postProcessing/fluxVsTime/fluxVsTime_diagram.png'
     set output outfile
     patches = system('cat existingPatches')
+    set key noenhanced
     plot for [patch in patches] 'postProcessing/fluxVsTime/table_phiWater_'.patch with linespoints title patch
     print 'Plot image generated in: '.outfile
 EOF
