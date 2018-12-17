@@ -12,6 +12,9 @@ echo "sample for velocity probes evaluation"
 
 #probeLocations
 
+#get the name of the first directory in postProcessing/probes
+timeDir=$(ls postProcessing/probes/ | head -n 1)
+
 ## Erstellen eines Diagramms mit GnuPlot
 
 echo "ploting diagram"
@@ -30,7 +33,7 @@ gnuplot <<- EOF
 	# - get the number of points
 	set key outside
 	numOfPoints = 4
-	firstTimeDir = 40
+	firstTimeDir = system('echo $timeDir')
 
 	###MITTELWERT
 	# get the mean for each point and print it to a file StatDat.dat
