@@ -1,4 +1,4 @@
-#!/bin/bash
+    #!/bin/bash
 
 # at the moment, the script works only for
 # generate probed velocities for points in probesDict with field magU
@@ -48,8 +48,10 @@ gnuplot <<- EOF
 	system('> meanValues; while IFS= read line; do cut -f1 StatDat.dat | paste -s >> meanValues; done < postProcessing/probes/40/magU')
 	system('paste postProcessing/probes/40/magU meanValues > dataToPlot')
 
-	plot for [i=2:numOfPoints+1] 'dataToPlot' using 1:i with linespoints title 'point '.(i-1),\
-		for [i=numOfPoints+2:(numOfPoints*2)+1] 'dataToPlot' using 1:i with lines title 'mean velocity point '.(i-numOfPoints-1)
+    set cbrange [0:100]
+
+	plot for [i=2:numOfPoints+1] 'dataToPlot' using 1:i with linespoints palette cb (i-2)*(100/numOfPoints) title 'point '.(i-1),\
+		for [i=numOfPoints+2:(numOfPoints*2)+1] 'dataToPlot' using 1:i with lines palette cb (i-numOfPoints-2)*(100/numOfPoints) title 'mean velocity point '.(i-numOfPoints-1)
 
 	print 'Plot image generated in: '.outfile
 EOF
