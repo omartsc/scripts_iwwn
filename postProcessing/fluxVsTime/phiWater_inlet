@@ -22,6 +22,9 @@ Create time
 
 Create mesh for time = 10
 
+Time = 0
+alphaPhi10 not defined
+
 Time = 10
     Area vector of patch ymax[3] = (0 0.55477358 0)
     Area magnitude of patch ymax[3] = 0.55477358
@@ -149,4 +152,3 @@ Time = 30
     Integral of alphaPhi10 over patch ymax[3] = -0.085596154
 
 End
-
