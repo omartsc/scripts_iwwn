@@ -1,12 +1,8 @@
     #!/bin/bash
 
-# at the moment, the script works only for
-# generate probed velocities for points in probesDict with field magU
-# and starting time at 40 seconds. That means,
-# it reads explicitly from postProcessing/probes/40/magU
-#
-# to do: -read from first time in postProcessing/probes
-#		-read from field to probe
+# the script works only for
+# generate probed velocities for points in probesDict with field magU.
+
 echo -e "\n"
 echo "sample for velocity probes evaluation"
 
@@ -45,8 +41,8 @@ gnuplot <<- EOF
 	set print
 
 	# transpose StatDat.dat file and append it to the probed files (slow, but for the moment the only solution :( )
-	system('> meanValues; while IFS= read line; do cut -f1 StatDat.dat | paste -s >> meanValues; done < postProcessing/probes/40/magU')
-	system('paste postProcessing/probes/40/magU meanValues > dataToPlot')
+	system('> meanValues; while IFS= read line; do cut -f1 StatDat.dat | paste -s >> meanValues; done < postProcessing/probes/'.firstTimeDir.'/magU')
+	system('paste postProcessing/probes/'.firstTimeDir.'/magU meanValues > dataToPlot')
 
     set cbrange [0:100]
 
@@ -55,4 +51,4 @@ gnuplot <<- EOF
 
 	print 'Plot image generated in: '.outfile
 EOF
-rm StatDat.dat meanValues dataToPlot
+rm StatDat.dat meanValues
