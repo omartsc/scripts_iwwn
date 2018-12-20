@@ -44,11 +44,20 @@ gnuplot <<- EOF
 	system('> meanValues; while IFS= read line; do cut -f1 StatDat.dat | paste -s >> meanValues; done < postProcessing/probes/'.firstTimeDir.'/magU')
 	system('paste postProcessing/probes/'.firstTimeDir.'/magU meanValues > dataToPlot')
 
-    set cbrange [0:100]
+    system('sed "s/ \+ /\t/g" postProcessing/probes/'.firstTimeDir.'/magU > magUtabs')
+    system('sed "/^#/!d" magUtabs > points')
+    system('> trData')
+    do for [i=3:numOfPoints+2] {
+        system('cut -f'.i.' points | paste -s >> trData')
+    }
+    system('paste trData StatDat.dat > postProcessing/velocityProbes/meanValues.txt')
+    print 'Mean values in: postProcessing/velocityProbes/meanValues.txt'
 
+    set cbrange [0:100]
 	plot for [i=2:numOfPoints+1] 'dataToPlot' using 1:i with linespoints palette cb (i-2)*(100/numOfPoints) title 'point '.(i-1),\
 		for [i=numOfPoints+2:(numOfPoints*2)+1] 'dataToPlot' using 1:i with lines palette cb (i-numOfPoints-2)*(100/numOfPoints) title 'mean velocity point '.(i-numOfPoints-1)
 
 	print 'Plot image generated in: '.outfile
+
 EOF
-rm StatDat.dat meanValues
+rm StatDat.dat meanValues dataToPlot magUtabs trData points
