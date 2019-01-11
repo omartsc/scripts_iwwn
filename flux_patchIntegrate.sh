@@ -41,9 +41,21 @@ gnuplot <<- EOF
     outfile = 'postProcessing/fluxVsTime/fluxVsTime_diagram.png'
     set output outfile
     patches = system('cat existingPatches')
+
+    set print "StatDat.dat"
+    do for [patch in patches] {
+        stats  'postProcessing/fluxVsTime/table_phiWater_'.patch u 2 nooutput ;
+        print STATS_mean
+    }
+    set print
+
+    system('paste existingPatches StatDat.dat > postProcessing/fluxVsTime/meanValues.txt')
+    print 'Mean values printed in file: postProcessing/fluxVsTime/meanValues.txt'
+
     set key noenhanced
-    plot for [patch in patches] 'postProcessing/fluxVsTime/table_phiWater_'.patch with linespoints title patch
+    set key outside
+    plot for [patch in patches] 'postProcessing/fluxVsTime/table_phiWater_'.patch using 1:2 with linespoints title patch
     print 'Plot image generated in: '.outfile
 EOF
-rm existingPatches
+rm existingPatches StatDat.dat
 echo "done"
