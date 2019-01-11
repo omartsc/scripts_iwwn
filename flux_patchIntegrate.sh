@@ -49,12 +49,15 @@ gnuplot <<- EOF
     }
     set print
 
+    meanVArr = system('cat StatDat.dat')
+
     system('paste existingPatches StatDat.dat > postProcessing/fluxVsTime/meanValues.txt')
     print 'Mean values printed in file: postProcessing/fluxVsTime/meanValues.txt'
 
     set key noenhanced
     set key outside
-    plot for [patch in patches] 'postProcessing/fluxVsTime/table_phiWater_'.patch using 1:2 with linespoints title patch
+    plot for [patch in patches] 'postProcessing/fluxVsTime/table_phiWater_'.patch using 1:2 with linespoints title patch, \
+        for [m in meanVArr] m+0 title m
     print 'Plot image generated in: '.outfile
 EOF
 rm existingPatches StatDat.dat
