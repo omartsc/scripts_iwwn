@@ -54,6 +54,7 @@ gnuplot <<- EOF
     system('paste trData StatDat.dat > postProcessing/velocityProbes/meanValues.txt')
     print 'Mean values in: postProcessing/velocityProbes/meanValues.txt'
 
+    unset colorbox
     set cbrange [0:100]
 	plot for [i=2:numOfPoints+1] 'dataToPlot' using 1:i with linespoints palette cb (i-2)*(100/numOfPoints) title 'point '.(i-1),\
 		for [i=numOfPoints+2:(numOfPoints*2)+1] 'dataToPlot' using 1:i with lines palette cb (i-numOfPoints-2)*(100/numOfPoints) title 'mean velocity point '.(i-numOfPoints-1)
