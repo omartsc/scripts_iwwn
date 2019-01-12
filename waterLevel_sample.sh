@@ -2,7 +2,7 @@
 # Description:	Runs the sample postprocessing tool of OpenFOAM and creates a table with two
 #				columns - one column is the time and the other is the correspondent water level
 #				at a defined line.
-#				After creating the table a diagram is plotted via gnuPlot. 
+#				After creating the table a diagram is plotted via gnuPlot.
 # Use:	optinally make script executable:	$ chmod +x waterLevel_sample.sh
 # 		run script:	$ . waterLevel_sample.sh
 #		optionally choose whether the sample command shell be executed again or not
@@ -10,15 +10,15 @@
 echo -e "\n"
 echo "sample for water level evaluation"
 
-#if [ ! -d ./postProcessing ]; then 
+#if [ ! -d ./postProcessing ]; then
 #	mkdir postprocessing
 #fi
 #
-#if [ ! -d ./postProcessing/waterLevelVsTime ]; then
-#	mkdir postProcessing/waterLevelVsTime
-#else
-#	rm postProcessing/waterLevelVsTime/*
-#fi
+if [ ! -d ./postProcessing/waterLevelVsTime ]; then
+	mkdir postProcessing/waterLevelVsTime
+else
+	rm postProcessing/waterLevelVsTime/*
+fi
 #
 #if [ -d ./postProcessing/sets ]; then
 #	read -p "-> The sets directory exists already. Do you want to sample again (y/n)? " ans1
@@ -33,14 +33,14 @@ echo "sample for water level evaluation"
 #	sample > postProcessing/sample_output
 #fi
 
-# Ausdünnung der aufgenommen Werte 
+# Ausdünnung der aufgenommen Werte
 echo "remove all lines with *e-* and 0"
 for i in ./postProcessing/sets/*/*.xy; do
 	sed -i '/e-/d' $i
 	sed -i '/\s0$/d' $i
 done
 
-# Ausdünnung aufgenommen Werte 
+# Ausdünnung aufgenommen Werte
 echo "keep only data for values closest to 0.5"
 for i in ./postProcessing/sets/*/*.xy; do
 	awk '{if (NR>1 && $2 < 0.5 && prev2 > 0.5) {print prev1, prev2; print $1, $2} prev1=$1; prev2=$2}' $i > $i.out1
@@ -52,14 +52,14 @@ for i in ./postProcessing/sets/*/*.out1; do
 	tail -n 2 $i > $i.out2
 done
 
-# Interpolation des z-Wertes der WSP-Lage auf exakt 0.5 (alpha.water)  
+# Interpolation des z-Wertes der WSP-Lage auf exakt 0.5 (alpha.water)
 echo "interpolate z-value for alpha.water 0.5"
 for i in ./postProcessing/sets/*/*.out2; do
 	awk '{if (NR>1) {x=0.5; x2=$2; y2=$1; y=(y2-y1)/(x2-x1)*(x-x1)+y1; print y, x} x1=$2; y1=$1}' $i > $i.out3
 done
 
-# Zeitdatei erstellen  
-grep -F 'Time = ' postProcessing/waterLevelVsTime/sample_output > postProcessing/waterLevelVsTime/fltimes
+# Zeitdatei erstellen
+grep -F 'Time = ' postProcessing/sample_output > postProcessing/waterLevelVsTime/fltimes
 grep -o '[^=^ ]\+$' postProcessing/waterLevelVsTime/fltimes > postProcessing/waterLevelVsTime/time_temp
 
 # Wert aus dritter Spalte für jeden Zeitschritt nehmen und in einer Datei auflisten
@@ -85,5 +85,9 @@ gnuplot <<- EOF
     set ylabel 'height [m]'
     set grid
 	set output 'postProcessing/waterLevelVsTime/waterLevel_diagram.png'
-	plot 'postProcessing/waterLevelVsTime/table_waterLevel' with linespoints title "water level"
+	stats 'postProcessing/waterLevelVsTime/table_waterLevel' u 2 nooutput ;
+	set print 'postProcessing/waterLevelVsTime/meanValueWaterLevel.txt'
+	print STATS_mean
+	set print
+	plot 'postProcessing/waterLevelVsTime/table_waterLevel' with linespoints title "water level", STATS_mean title sprintf("mean value = %1.4f",STATS_mean)
 EOF
